@@ -19,6 +19,7 @@ public class PeaKlass extends Application {
     Scene sceneMenu,sceneMast,sceneVäärtus,scenePaar,sceneTõenäosused;
     static String hetkeMast;
     Label labelMastPealkiri = new Label();
+    Label labelsplitiTN = new Label();
     String paariOsa1,paariOsa2 = null;
     boolean paariValimine = true;
     HBox lahtrid = new HBox();
@@ -49,7 +50,7 @@ public class PeaKlass extends Application {
         sceneMenu = new Scene(layoutMenu,400,400);
 
         // Stseen Mast
-        labelMastPealkiri = new Label("FLOPI SISESTUS"); labelMastPealkiri.setFont(new Font(20));
+        labelMastPealkiri = new Label("Flopi  esimene kaart"); labelMastPealkiri.setFont(new Font(20));
         Button buttonMastRuutu = new Button(/*Ruutu -> */"\u2666"); buttonMastRuutu.setFont(new Font(40));
         buttonMastRuutu.setOnAction(e -> mastiNupuVajutus("ruutu",aken,sceneVäärtus)); buttonMastRuutu.setStyle("-fx-text-fill: red");
         Button buttonMastRisti = new Button(/*Risti -> */"\u2663"); buttonMastRisti.setFont(new Font(40));
@@ -107,6 +108,7 @@ public class PeaKlass extends Application {
 
         // Stseen tõenäosus
         Label labelTõenäosus = new Label("Paaride võidu tõenäosused on:"); labelTõenäosus.setFont(new Font(20));
+        this.labelsplitiTN = new Label("Spliti tõenäosus on: ");
         VBox layoutTõenäosus = new VBox();
         layoutTõenäosus.setSpacing(10);
         Button buttonTõenäosus = new Button("Turni kaart"); buttonTõenäosus.setOnAction(e -> tõenäosuseNupuVajutus(aken, sceneMast, buttonTõenäosus, lauaKaardid));
@@ -117,7 +119,7 @@ public class PeaKlass extends Application {
         this.lahtrid.setSpacing(5);
         layoutTõenäosusScroll.setContent(this.lahtrid);
         layoutTõenäosusScroll.setPadding(new Insets(20));
-        layoutTõenäosus.getChildren().addAll(labelTõenäosus, layoutTõenäosusScroll,buttonTõenäosus);
+        layoutTõenäosus.getChildren().addAll(labelTõenäosus, layoutTõenäosusScroll,this.labelsplitiTN,buttonTõenäosus);
         sceneTõenäosused = new Scene(layoutTõenäosus,400,400);
 
 
@@ -136,7 +138,7 @@ public class PeaKlass extends Application {
             lava.setScene(stseen);
             button.setText("Riveri kaart");
         } else if (lauakaardid.size() == 4) {
-            labelMastPealkiri.setText("Turni kaart");
+            labelMastPealkiri.setText("Riveri kaart");
             lava.setScene(stseen);
             button.setText("EXIT");
         } else if(lauakaardid.size()== 5) {
@@ -164,13 +166,13 @@ public class PeaKlass extends Application {
                 Label paariNimi = new Label("Paar: " + paar.toString());
                 //////////// TÕENÄOSUSE SISESTUS  ////////////
                 Label paariTN = new Label("" + kombinatsiooniTõenäosus(paar, lauaKaardid, kasutamataKaardid, 2,meetodid));
-                Label splitiTN = new Label("Spliti tõenäosus = " + "");
                 VBox lahter = new VBox();
-                lahter.getChildren().addAll(paariNimi,paariTN, splitiTN);
+                lahter.getChildren().addAll(paariNimi,paariTN);
                 lahter.setPadding(new Insets(10));
                 lahter.setStyle("-fx-background-color: linear-gradient(#E4EAA2, #9CD672);");
                 lahtrid.getChildren().add(lahter);
             }
+            this.labelsplitiTN.setText("Spliti tõenäosus on: " + "");
             lava.setScene(stseen);
             paariValimine = condition;
         }
@@ -196,6 +198,7 @@ public class PeaKlass extends Application {
                     kasutamataKaardid.remove(new Kaart(hetkeMast,Integer.parseInt(väärtus)));
                     paariOsa1 = hetkeMast + " " + väärtus;
                 }
+                labelMastPealkiri.setText("Paari teine kaart");
                 lava.setScene(stseen);
             } else { // Kui teist kaarti pole, seab selle
                 boolean kasOnListis = false;
@@ -217,6 +220,7 @@ public class PeaKlass extends Application {
                     paarid.add(new Paar(new Kaart(paar1Eraldi[0],Integer.parseInt(paar1Eraldi[1])),new Kaart(paar2Eraldi[0],Integer.parseInt(paar2Eraldi[1]))));
                     paariOsa1 = null; paariOsa2 = null;
                     lava.setScene(paariScene);
+                    labelMastPealkiri.setText("Paari esimene kaart");
                 }
 
             }
@@ -242,18 +246,14 @@ public class PeaKlass extends Application {
                 Label paariNimi = new Label("Paar: " + paar.toString());
                 //////////// TÕENÄOSUSE SISESTUS  ////////////
                 Label paariTN = new Label("" + kombinatsiooniTõenäosus(paar, lauaKaardid, kasutamataKaardid, 2,meetodid));
-                Label splitiTN = new Label("Spliti tõenäosus = " + "");
                 VBox lahter = new VBox();
-                lahter.getChildren().addAll(paariNimi,paariTN, splitiTN);
+                lahter.getChildren().addAll(paariNimi,paariTN);
                 lahter.setPadding(new Insets(10));
                 lahter.setStyle("-fx-background-color: linear-gradient(#E4EAA2, #9CD672);");
-
                 this.lahtrid.getChildren().add(lahter);
-
             }
 
-
-
+            this.labelsplitiTN.setText("Spliti tõenäosus on: " + "");
 
         } else { // Kui on lauale kaartide panemise aeg
             boolean kasOnListis = false;
@@ -270,9 +270,16 @@ public class PeaKlass extends Application {
                 kasutatudKaardid.add(new Kaart(hetkeMast,Integer.parseInt(väärtus)));
                 kasutamataKaardid.remove(new Kaart(hetkeMast,Integer.parseInt(väärtus)));
                 lauaKaardid.add(new Kaart(hetkeMast,Integer.parseInt(väärtus)));
-                if (lauaKaardid.size() == 3) labelMastPealkiri.setText("Vali paar");
+                if (lauaKaardid.size() == 3) labelMastPealkiri.setText("Paari esimene kaart");
             }
             lava.setScene(stseen);
+            switch (lauaKaardid.size()) {
+                case 1: labelMastPealkiri.setText("Flopi teine kaart");
+                    break;
+                case 2: labelMastPealkiri.setText("Flopi kolmas kaart");
+                    break;
+                default:break;
+            }
         }
 
     }
