@@ -1,4 +1,3 @@
-package oop;
 import java.util.Objects;
 
 public class Kaart implements Comparable<Kaart> {
@@ -18,6 +17,14 @@ public class Kaart implements Comparable<Kaart> {
         return väärtus;
     }
 
+    public void setMast(String mast) {
+        this.mast = mast;
+    }
+
+    public void setVäärtus(int väärtus) {
+        this.väärtus = väärtus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,7 +39,7 @@ public class Kaart implements Comparable<Kaart> {
         return Objects.hash(mast, väärtus);
     }
 
-    @Override 
+    @Override
     public String toString() {
 
         switch (väärtus){

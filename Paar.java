@@ -1,4 +1,3 @@
-package oop;
 public class Paar {
     private Kaart esimeneKaart;
     private Kaart teineKaart;
@@ -10,7 +9,7 @@ public class Paar {
 
     @Override
     public String toString() {
-        return esimeneKaart + " " + teineKaart;
+        return esimeneKaart + " & " + teineKaart;
     }
 
     public Kaart getEsimeneKaart() {
