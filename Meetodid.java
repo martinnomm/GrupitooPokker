@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 public class Meetodid {
 
@@ -297,6 +299,8 @@ public class Meetodid {
                 kordusi = 1;
                 kõrgemadKaardid.add(väärtus);
                 continue;
+            }else if(väärtus == kaart.getVäärtus()){
+
             }
             else if (kordusi == 5) break;
             else if (väärtus + 1 == kaart.getVäärtus()) {

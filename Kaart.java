@@ -17,14 +17,6 @@ public class Kaart implements Comparable<Kaart> {
         return väärtus;
     }
 
-    public void setMast(String mast) {
-        this.mast = mast;
-    }
-
-    public void setVäärtus(int väärtus) {
-        this.väärtus = väärtus;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,7 +31,7 @@ public class Kaart implements Comparable<Kaart> {
         return Objects.hash(mast, väärtus);
     }
 
-    @Override
+    @Override 
     public String toString() {
 
         switch (väärtus){
@@ -78,5 +70,13 @@ public class Kaart implements Comparable<Kaart> {
         if (getVäärtus() > võrreldav.getVäärtus()) return 1;
         if (getVäärtus() < võrreldav.getVäärtus()) return -1;
         return 0;
+    }
+
+    public void setMast(String mast) {
+        this.mast = mast;
+    }
+
+    public void setVäärtus(int väärtus) {
+        this.väärtus = väärtus;
     }
 }
